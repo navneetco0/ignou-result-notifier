@@ -11,7 +11,7 @@ const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
 (0, configs_1.connectToDatabase)();
 node_cron_1.default.schedule("*/5 * * * *", controllers_1.checkForChanges);
-console.log("⏳ Monitoring started. Checking for updates every 5 seconds...");
+console.log("⏳ Monitoring started. Checking for updates every 5 minutes...");
 app.get("/", (req, res) => {
     res.send("Cron job is running...");
 });

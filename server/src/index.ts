@@ -8,14 +8,14 @@ const PORT = process.env.PORT || 3000;
 
 connectToDatabase();
 
+
 cron.schedule("*/5 * * * *", checkForChanges);
 
-console.log("⏳ Monitoring started. Checking for updates every 5 seconds...");
+console.log("⏳ Monitoring started. Checking for updates every 5 minutes...");
 
 app.get("/", (req, res) => {
     res.send("Cron job is running...");
 });
-  
 
 // Start the server
 app.listen(PORT, () => {
