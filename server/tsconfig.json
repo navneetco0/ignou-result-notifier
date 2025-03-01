@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+      "rootDirs": ["src"],
+      "outDir": "dist",
+      "lib": ["ESNext", "DOM"],
+      "target": "ESNext",
+      "module": "CommonJS",
+      "moduleResolution": "node",
+      "types": ["node"],
+      "allowJs": false,
+      "resolveJsonModule": true,
+      "esModuleInterop": true,
+      "sourceMap": true,
+      "allowSyntheticDefaultImports": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": false,
+      "pretty": true
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "dist", "data"],
+    "ts-node": {
+      "swc": true
+    }
+  }
