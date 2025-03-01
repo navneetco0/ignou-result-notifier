@@ -20,13 +20,8 @@ const getIgnouResult = async (student_id) => {
         const prev_result = (await student_result_model_1.default
             .findOne({ student_id, type: student.requested_result[0] })
             .lean()).results.map(({ _id, ...rest }) => rest);
-        // if (
-        //   _.isEqual(
-        //     _.sortBy(prev_result, "course_code"),
-        //     _.sortBy(data.results, "course_code")
-        //   )
-        // )
-        //   return null;
+        if (lodash_1.default.isEqual(lodash_1.default.sortBy(prev_result, "course_code"), lodash_1.default.sortBy(data.results, "course_code")))
+            return null;
         const new_result = lodash_1.default.differenceWith(data, prev_result, lodash_1.default.isEqual);
         const mail_html = (0, utils_1.merge_html)(prev_result, new_result);
         await (0, send_email_controller_1.sendEmail)(student.email, mail_html);

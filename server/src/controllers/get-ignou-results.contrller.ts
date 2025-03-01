@@ -17,13 +17,13 @@ export const getIgnouResult = async (student_id: string) => {
         .findOne({ student_id, type: student.requested_result[0] })
         .lean()
     ).results.map(({ _id, ...rest }) => rest);
-    // if (
-    //   _.isEqual(
-    //     _.sortBy(prev_result, "course_code"),
-    //     _.sortBy(data.results, "course_code")
-    //   )
-    // )
-    //   return null;
+    if (
+      _.isEqual(
+        _.sortBy(prev_result, "course_code"),
+        _.sortBy(data.results, "course_code")
+      )
+    )
+      return null;
     const new_result = _.differenceWith(data, prev_result, _.isEqual);
     const mail_html = merge_html(prev_result, new_result);
     await sendEmail(student.email, mail_html);
