@@ -16,20 +16,27 @@ const getIgnouResult = async (student_id) => {
             return null;
         }
         const url = (0, utils_1.tee_result)(student.enrollment_no, student.requested_result[0]);
-        const data = await (0, utils_1.htmlDataExtractor)(url);
-        const prev_result = (await student_result_model_1.default
+        const data = await (0, utils_1.TEEDataExtractor)(url);
+        const results = await student_result_model_1.default
             .findOne({ student_id, type: student.requested_result[0] })
-            .lean()).results.map(({ _id, ...rest }) => rest);
+            .lean();
+        if (results?._id) {
+            await student_result_model_1.default.findByIdAndUpdate(results._id, {
+                ...data,
+            }, { new: true });
+        }
+        else
+            await student_result_model_1.default.create({
+                ...data,
+                type: student.requested_result[0],
+                student_id,
+            });
+        const prev_result = results?.results?.map(({ _id, ...rest }) => rest) || [];
         if (lodash_1.default.isEqual(lodash_1.default.sortBy(prev_result, "course_code"), lodash_1.default.sortBy(data.results, "course_code")))
             return null;
-        const new_result = lodash_1.default.differenceWith(data, prev_result, lodash_1.default.isEqual);
-        const mail_html = (0, utils_1.merge_html)(prev_result, new_result);
+        const new_result = lodash_1.default.differenceWith(data.results, prev_result, lodash_1.default.isEqual);
+        const mail_html = (0, utils_1.teeMergeHtml)(prev_result, new_result);
         await (0, send_email_controller_1.sendEmail)(student.email, mail_html);
-        await student_result_model_1.default.create({
-            ...data,
-            type: student.requested_result[0],
-            student_id,
-        });
     }
     catch (error) {
         console.error("Error fetching data:", error.message);

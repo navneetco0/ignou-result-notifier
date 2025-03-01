@@ -15,6 +15,8 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./check-for-changes.controller"), exports);
+// export * from './compare-ignou-assignment-status.controller';
+__exportStar(require("./compare-ignou-grade.controller"), exports);
 __exportStar(require("./get-ignou-results.contrller"), exports);
 __exportStar(require("./send-email.controller"), exports);
 //# sourceMappingURL=index.js.map

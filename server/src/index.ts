@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 connectToDatabase();
 
 
-cron.schedule("*/5 * * * *", checkForChanges);
+cron.schedule("*/5 * * * * * *", checkForChanges);
 
 console.log("⏳ Monitoring started. Checking for updates every 5 minutes...");
 
